@@ -1,0 +1,235 @@
+﻿swagger: "2.0"
+info:
+  description: "Task Management"
+  version: "1.0.0"
+  title: "Taskmgmt"
+host: "localhost:8090"
+basePath: "/resttest"
+tags:
+- name: "User"
+- name: "Task"
+paths:
+  /User/SearchByPrototype:
+    post:
+      tags:
+      - "User"
+      summary: "Search for users with Prototype"
+      description: ""
+      operationId: "SearchByPrototype"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Prototype"
+        required: true
+        schema: 
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        405:
+          description: "Invalid input"
+  /User:
+    post:
+      tags:
+      - "User"
+      summary: "Add a new user"
+      description: "provide -1 for id to let the server assign a new valid id"
+      operationId: "addUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "User"
+      summary: "Update an existing User"
+      description: ""
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        405:
+          description: "Invalid Input"
+  /User/{UserId}:
+    get:
+      tags:
+      - "User"
+      summary: "Find User by ID"
+      description: "Returns a single User"
+      operationId: "getUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "UserId"
+        in: "path"
+        description: "ID of User to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        405:
+          description: "User not found"
+    delete:
+      tags:
+      - "User"
+      summary: "Deletes a User"
+      description: ""
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "UserId"
+        in: "path"
+        description: "User id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        405:
+          description: "User not found"
+  /Task:
+    post:
+      tags:
+      - "Task"
+      summary: "Add a new task"
+      description: "provide -1 for id to let the server assign a new valid id"
+      operationId: "addTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "Task"
+      summary: "Update an existing Task"
+      description: ""
+      operationId: "updateTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        405:
+          description: "Invalid Input"
+  /Task/{TaskId}:
+    get:
+      tags:
+      - "Task"
+      summary: "Find Task by ID"
+      description: "Returns a single Task"
+      operationId: "getTaskById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "TaskId"
+        in: "path"
+        description: "ID of Task to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Task"
+        405:
+          description: "Task not found"
+    delete:
+      tags:
+      - "Task"
+      summary: "Deletes a Task"
+      description: ""
+      operationId: "deleteTask"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "TaskId"
+        in: "path"
+        description: "Task id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        405:
+          description: "Task not found"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      FirstName:
+        type: "string"
+      LastName:
+        type: "string"
+      tasks:
+        type: "array"
+        items:
+          $ref: "#/definitions/Task"
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      Title:
+        type: "string"
+      Description:
+        type: "string"
+      State:
+        type: "boolean"
+
+
